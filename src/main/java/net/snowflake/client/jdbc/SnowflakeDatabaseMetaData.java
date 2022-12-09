@@ -1459,6 +1459,8 @@ public class SnowflakeDatabaseMetaData implements DatabaseMetaData {
       }
     }
 
+    this.showCommand = showCommand;
+
     logger.debug("sql command to get table metadata: {}", showCommand);
 
     resultSet = executeAndReturnEmptyResultIfNotFound(statement, showCommand, GET_TABLES);
@@ -1650,6 +1652,8 @@ public class SnowflakeDatabaseMetaData implements DatabaseMetaData {
       }
     }
 
+    this.showCommand = showCommand;
+    
     logger.debug("sql command to get column metadata: {}", showCommand);
 
     ResultSet resultSet =
