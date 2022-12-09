@@ -1406,7 +1406,7 @@ public class SnowflakeDatabaseMetaData implements DatabaseMetaData {
     final Pattern compiledSchemaPattern = Wildcard.toRegexPattern(schemaPattern, true);
     final Pattern compiledTablePattern = Wildcard.toRegexPattern(tableNamePattern, true);
 
-    showCommand = null;
+    String showCommand = "";
     final boolean viewOnly =
         inputValidTableTypes.size() == 1 && "VIEW".equalsIgnoreCase(inputValidTableTypes.get(0));
     final boolean tableOnly =
@@ -1446,6 +1446,8 @@ public class SnowflakeDatabaseMetaData implements DatabaseMetaData {
         showCommand += " in schema \"" + catalogEscaped + "\".\"" + schemaUnescaped + "\"";
       }
     }
+
+    this.showCommand = showCommand;
 
     logger.debug("sql command to get table metadata: {}", showCommand);
 
@@ -1596,7 +1598,7 @@ public class SnowflakeDatabaseMetaData implements DatabaseMetaData {
     final Pattern compiledTablePattern = Wildcard.toRegexPattern(tableNamePattern, true);
     final Pattern compiledColumnPattern = Wildcard.toRegexPattern(columnNamePattern, true);
 
-    showCommand = "show /* JDBC:DatabaseMetaData.getColumns() */ columns";
+    String showCommand = "show /* JDBC:DatabaseMetaData.getColumns() */ columns";
 
     if (columnNamePattern != null
         && !columnNamePattern.isEmpty()
@@ -1638,6 +1640,8 @@ public class SnowflakeDatabaseMetaData implements DatabaseMetaData {
       }
     }
 
+    this.showCommand = showCommand;
+    
     logger.debug("sql command to get column metadata: {}", showCommand);
 
     ResultSet resultSet =
